@@ -1,4 +1,5 @@
 ﻿using AlToyBarnContactApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlToyBarnContactApp.Services
 {
@@ -25,7 +26,7 @@ namespace AlToyBarnContactApp.Services
 
         public Cliente? Find(int id)
         {
-            return _context.Clientes.Find(id);
+            return _context.Clientes.Include("Contatos").First(x => x.Id == id);
         }
 
         public ICollection<Cliente> FindAll()

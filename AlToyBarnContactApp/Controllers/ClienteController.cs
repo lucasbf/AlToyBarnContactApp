@@ -15,5 +15,10 @@ namespace AlToyBarnContactApp.Controllers
         {
             return View(_service.FindAll());
         }
+
+        public IActionResult Detalhar(int id)
+        {
+            return View(_service.Find(id));
+        }
     }
 }
