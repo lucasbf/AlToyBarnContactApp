@@ -20,6 +20,9 @@ namespace AlToyBarnContactApp.Services
 
         public void Delete(Cliente cliente)
         {
+            var contatos = _context.Contatos.Where(
+                contato => contato.IdCliente == cliente.Id);
+            _context.Contatos.RemoveRange(contatos);         
             _context.Clientes.Remove(cliente);
             _context.SaveChanges();
         }

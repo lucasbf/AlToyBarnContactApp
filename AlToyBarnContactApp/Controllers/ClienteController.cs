@@ -52,5 +52,20 @@ namespace AlToyBarnContactApp.Controllers
                 _service.Create(cliente);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Remover(int id)
+        {
+            Cliente cliente = _service.Find(id)!;
+            return View(cliente);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Remover([Bind("Id", "Nome", "Endereco")] Cliente cliente)
+        {
+            _service.Delete(cliente);
+            return RedirectToAction("Index");
+        }
     }
 }
