@@ -25,6 +25,13 @@ namespace AlToyBarnContactApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult Editar(int id)
+        {
+            Cliente cliente = _service.Find(id)!;
+            return View("Criar",cliente);
+        }
+
+        [HttpGet]
         public IActionResult Criar()
         {
             return View();
@@ -32,14 +39,17 @@ namespace AlToyBarnContactApp.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public IActionResult Criar([Bind("Nome", "Endereco")] Cliente cliente)
+        public IActionResult Criar([Bind("Id", "Nome", "Endereco")] Cliente cliente)
         {
             if (Char.IsDigit(cliente.Nome[0]))
             {
                 ModelState.AddModelError("Nome", "Nome não pode iniciar com dígito!");
                 return View(cliente);
             }
-            _service.Create(cliente);
+            if (cliente.Id > 0)
+                _service.Update(cliente);
+            else
+                _service.Create(cliente);
             return RedirectToAction("Index");
         }
     }
