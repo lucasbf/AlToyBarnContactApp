@@ -2,6 +2,41 @@
 @{
     ViewData["Title"] = "Index - Contatos";
 }
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $("#dialog-confirm").dialog({
+                resizable: false,
+                height: "auto",
+                width: 400,
+                modal: true,
+                buttons: {
+                    "Sim": function () {
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("Remover")",
+                            data: { id: $("a.remove").attr("data-id"), idcliente: $("a.remove").attr("data-idcliente") },
+                            success: function (info) {
+                                $("#dialog-confirm").dialog("close");
+                                $("a.remove").closest("tr").hide();
+                                $("a.remove").removeClass("remove");
+                            }
+                        });
+                    },
+                    Cancel: function () {
+                        $("a.remove").removeClass("remove");
+                        $("#dialog-confirm").dialog("close");
+                    }
+                }
+            });
+            $("#dialog-confirm").dialog("close");
+            $(".remover-contato").on("click", function () {
+                $(this).addClass("remove");
+                $("#dialog-confirm").dialog("open");
+            });
+        });
+    </script>
+}
 <h1>Contatos</h1>
 @if (Model.Count() > 0) {
      <p>
@@ -26,10 +61,18 @@
                         <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
                         <td>
                             <a asp-action="Editar" asp-route-id="@item.Id" asp-route-idcliente="@item.IdCliente">Editar</a> |
-                            <a asp-action="Remover" asp-route-id="@item.Id" asp-route-idcliente="@item.IdCliente">Remover</a> |
+                            <!--<a asp-action="Remover" asp-route-id="@item.Id" asp-route-idcliente="@item.IdCliente">Remover</a>-->
+                            <a href="#" class="remover-contato" data-id="@item.Id" data-idcliente="@item.IdCliente">Remover</a>
                         </td>
                     </tr>
             }
         </tbody>
     </table>
 }
+
+<div id="dialog-confirm" title="Remover contato?">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>
+        O contato será permanentemente removido. Deseja prosseguir?
+    </p>
+</div>

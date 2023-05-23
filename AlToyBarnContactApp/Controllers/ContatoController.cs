@@ -33,5 +33,13 @@ namespace AlToyBarnContactApp.Controllers
             _serviceContato.Create(contato);
             return RedirectToAction("Index", new { id = contato.IdCliente});
         }
+
+        [HttpPost]
+        public IActionResult Remover(int id, int idcliente)
+        {
+            var contato = _serviceContato.Find(new Contato { Id = id, IdCliente = idcliente })!;
+            _serviceContato.Delete(contato);
+            return Json(new { sucess = true });
+        }
     }
 }
