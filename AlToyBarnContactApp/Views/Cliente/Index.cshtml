@@ -28,7 +28,12 @@
                 <td>
                     <a asp-action="Editar" asp-route-id="@item.Id">Editar</a> |
                     <a asp-action="Detalhar" asp-route-id="@item.Id">Detalhar</a> |
-                    <a asp-action="Remover" asp-route-id="@item.Id">Remover</a>
+                    <a asp-action="Remover" asp-route-id="@item.Id">Remover</a> |
+                    @if (item.Contatos.Count() > 0) {
+                        <a asp-controller="Contato" asp-action="Index" asp-route-id="@item.Id">Contatos</a>
+                    } else {
+                        <a asp-controller="Contato" asp-action="Criar" asp-route-id="@item.Id">Novo Contato</a>
+                    }
                 </td>
             </tr>
         }

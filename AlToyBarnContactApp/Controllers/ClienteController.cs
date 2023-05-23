@@ -20,14 +20,14 @@ namespace AlToyBarnContactApp.Controllers
 
         public IActionResult Detalhar(int id)
         {
-            Cliente? cli = _service.Find(id);
+            Cliente? cli = _service.Find(new Cliente { Id = id });
             return View(cli);
         }
 
         [HttpGet]
         public IActionResult Editar(int id)
         {
-            Cliente cliente = _service.Find(id)!;
+            Cliente cliente = _service.Find(new Cliente { Id = id })!;
             return View("Criar",cliente);
         }
 
@@ -56,7 +56,7 @@ namespace AlToyBarnContactApp.Controllers
         [HttpGet]
         public IActionResult Remover(int id)
         {
-            Cliente cliente = _service.Find(id)!;
+            Cliente cliente = _service.Find(new Cliente { Id = id })!;
             return View(cliente);
         }
 
