@@ -17,7 +17,8 @@ builder.Services.AddDbContext<ContatosContext>(
 // Injeção de dependências
 // builder.Services.AddScoped<IClienteService, DBContextCliente>();
 builder.Services.AddScoped<IClienteService, DapperCliente>();
-builder.Services.AddScoped<IContatoService, DBContextContato>();
+//builder.Services.AddScoped<IContatoService, DBContextContato>();
+builder.Services.AddScoped<IContatoService, DapperContato>();
 
 var app = builder.Build();
 
