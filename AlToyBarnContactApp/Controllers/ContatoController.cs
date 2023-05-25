@@ -1,6 +1,7 @@
 ﻿using AlToyBarnContactApp.Models;
 using AlToyBarnContactApp.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AlToyBarnContactApp.Controllers
 {
@@ -8,6 +9,13 @@ namespace AlToyBarnContactApp.Controllers
     {
         private readonly IContatoService _serviceContato;
 
+        private List<SelectListItem> _redesSociais = new()
+        {
+            new SelectListItem() { Value = "Instagram", Text = "Instagram" },
+            new SelectListItem() { Value = "TikTok", Text = "TikTok" },
+            new SelectListItem() { Value = "Twitter", Text = "Twitter"},
+            new SelectListItem() { Value = "Email", Text = "Email"}
+        };
         public ContatoController(IContatoService serviceContato)
         {
             _serviceContato = serviceContato;
@@ -23,6 +31,7 @@ namespace AlToyBarnContactApp.Controllers
         public IActionResult Criar(int id)
         {
             ViewBag.Id = id;
+            ViewBag.RedesSociais = _redesSociais;
             return View();
         }
 
